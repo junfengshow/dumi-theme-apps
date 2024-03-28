@@ -1,0 +1,99 @@
+.pageSubMenu {
+  & > :global(.ant-menu-item) {
+    padding-left: 8px !important;
+    margin: 0 8px;
+    width: unset;
+  }
+}
+
+.menuWrap {
+  flex: 0 0 152px;
+  max-width: 152px;
+  width: 152px;
+  height: calc(100vh - 48px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+  padding: 10px 0;
+
+  :global(.ant-menu-submenu .ant-menu-submenu-title) {
+    padding: 0 0 0 8px !important;
+    border-radius: 4px;
+    margin: 0;
+    width: 100%;
+    height: 34px;
+    line-height: 34px;
+
+    &:hover {
+      background: #fff !important;
+    }
+
+    :global {
+      .ant-menu-submenu-arrow {
+        right: 4px;
+      }
+    }
+  }
+
+  :global(.ant-menu-submenu) {
+    position: relative;
+    padding: 0 8px;
+  }
+
+  :global(.ant-menu-submenu .ant-menu-sub.ant-menu-inline) {
+    background: #fff;
+  }
+
+  :global(.ant-menu-submenu .ant-menu-item) {
+    border-left: 1px solid #e5e5e5;
+    padding: 0 !important;
+    margin: 0;
+    margin-left: 10px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 0;
+
+    &:hover {
+      background: #fff !important;
+
+      a {
+        background: rgba(74, 134, 255, 10%);
+        color: #4a86ff;
+      }
+    }
+
+    &::before {
+      content: '-';
+      padding-left: 2px;
+      color: #ddd;
+    }
+  }
+
+  :global(.ant-menu-submenu .ant-menu-item.ant-menu-item-selected) {
+    background: none;
+  }
+
+  :global(.ant-menu-submenu .ant-menu-item .ant-menu-title-content) {
+    padding-left: 2px;
+    padding-right: 8px;
+    display: flex;
+  }
+
+  :global(.ant-menu-submenu .ant-menu-item .ant-menu-title-content) a {
+    padding: 0 8px;
+    flex: 1 1;
+    border-radius: 4px;
+    line-height: 28px;
+  }
+
+  :global(
+      .ant-menu-submenu
+        .ant-menu-item.ant-menu-item-selected
+        .ant-menu-title-content
+    )
+    a {
+    background: rgba(74, 134, 255, 10%);
+    color: #4a86ff;
+    font-weight: 700;
+  }
+}

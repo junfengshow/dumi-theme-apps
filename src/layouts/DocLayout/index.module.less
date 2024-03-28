@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.pageWrap {
+  background: #f0f2f5;
+  display: flex;
+}
+
+.logo {
+  height: 40px;
+  padding: 0 10px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 65%);
+  font-size: 16px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+  }
+
+  strong {
+    margin-left: 6px;
+  }
+}
+
+.sider {
+  flex: 0 0 132px;
+
+  &:global(.ant-layout-sider-collapsed) {
+    .logo {
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo strong {
+      display: none;
+    }
+  }
+}
+
+.pageMenu :global(.ant-menu-item) {
+  padding-left: 16px !important;
+}
+
+.mainContent {
+  flex: auto;
+  padding-top: 48px;
+  position: relative;
+}
+
+.pageWrap .mainHeader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: #fff !important;
+  z-index: 10;
+  height: 48px;
+  line-height: 48px;
+  box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 8%);
+  padding: 0 16px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+
+  & > img {
+    border-radius: 2px;
+    display: block;
+  }
+}
+
+.pageContentWrap {
+  display: flex;
+}
+
+.pageWrap .contentWrap {
+  height: calc(100vh - 48px) !important;
+  flex: auto;
+  overflow-y: auto;
+}
+
+.contentWrap {
+  :global(.dumi-default-content) {
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px 20px;
+    min-height: calc(100vh - 48px);
+    background: #fff;
+  }
+}
+
+.footer {
+  text-align: center;
+  background: #001529 !important;
+  color: #fff !important;
+  border-left: 1px solid blue;
+}
+
+.navIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+}
