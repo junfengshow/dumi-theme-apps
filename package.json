@@ -1,11 +1,15 @@
 {
   "name": "dumi-theme-apps",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A theme package for dumi",
   "keywords": [
     "dumi",
     "dumi-theme"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/junfengshow/dumi-theme-apps"
+  },
   "license": "MIT",
   "types": "dist/types.d.ts",
   "files": [
@@ -44,7 +48,8 @@
   },
   "dependencies": {
     "animated-scroll-to": "^2.3.0",
-    "antd": "^5.15.4"
+    "antd": "^5.15.4",
+    "user": "^0.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

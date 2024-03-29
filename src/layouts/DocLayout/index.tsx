@@ -1,116 +1,46 @@
 /**
  * main layout
  */
-import { Layout, Menu } from 'antd';
 import {
-  history,
-  useFullSidebarData,
+  Helmet,
+  useIntl,
   useLocation,
-  useNavData,
-  useOutlet,
+  useRouteMeta,
+  useSidebarData,
   useSiteData,
 } from 'dumi';
-import DumiContent from 'dumi/theme-default/slots/Content';
-import React, { useMemo } from 'react';
-import SubMenu from './SubMenu';
-import styles from './index.module.less';
-
-const { Header, Content, Footer, Sider } = Layout;
+import React from 'react';
+import Home from './Home';
+import MainLayout from './MainLayout';
 
 const Main: React.FC = () => {
+  const intl = useIntl();
+  const { hostname } = useSiteData();
   const { pathname } = useLocation();
-  const siderbar = useFullSidebarData();
-  const nav = useNavData();
-  const outlet = useOutlet();
-  const { themeConfig } = useSiteData();
-
-  const menu = useMemo(() => {
-    return nav.map((item) => {
-      const submenus = [];
-      for (const key in siderbar) {
-        if (
-          !key.includes(item.link!) ||
-          key === '/index' ||
-          nav.some((it) => it.link === key)
-        ) {
-          continue;
-        }
-        const subItem = siderbar[key][0];
-        submenus.push({
-          label: subItem.title,
-          key: key.substring(0, key.length - 2),
-          children: subItem?.children.map((subItem) => ({
-            label: subItem.title,
-            key: subItem.link,
-          })),
-        });
-      }
-      return {
-        label: item.title,
-        key: item.link,
-        icon: item.icon ? (
-          <img src={item.icon} className={styles.navIcon} />
-        ) : undefined,
-        submenus,
-      };
-    }) as any[];
-  }, [siderbar, nav, pathname]);
-
-  const currentItem =
-    pathname === '/'
-      ? menu[0]
-      : menu.find(
-          (item) => item.key !== '/' && pathname.indexOf(item.key) !== -1,
-        );
+  const siderbar = useSidebarData();
+  const { frontmatter: fm } = useRouteMeta();
 
   return (
-    <Layout className={styles.pageWrap}>
-      <Sider
-        collapsedWidth="50"
-        className={styles.sider}
-        width={132}
-        collapsed={false}
-      >
-        <div className={styles.logo}>
-          {!!themeConfig.logo && <img src={themeConfig.logo} alt="" />}
-          <strong>{themeConfig.name}</strong>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[currentItem?.key || '/']}
-          items={menu}
-          onSelect={({ key }) => {
-            const item = menu.find((it) => it.key === key);
-            const first = item.submenus[0];
-            let _key = first.key || key;
-            if (first.children?.length) {
-              _key = first.children[0].key;
-            }
-
-            history.push(_key);
-          }}
-          className={styles.pageMenu}
-        />
-      </Sider>
-      <Layout className={styles.mainContent}>
-        <Header className={styles.mainHeader}>
-          <div className={styles.headerLeft}>
-            <span style={{ marginRight: 10 }}>{currentItem?.icon}</span>
-            {currentItem?.label}
-          </div>
-        </Header>
-        <Content className={styles.pageContentWrap}>
-          {!!currentItem?.submenus && (
-            <SubMenu menu={currentItem?.submenus} currentItem={currentItem} />
-          )}
-          <div className={styles.contentWrap}>
-            <DumiContent>{outlet}</DumiContent>
-            <Footer className={styles.footer}>恭喜发财</Footer>
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
+    <>
+      <Helmet>
+        <html lang={intl.locale.replace(/-.+$/, '')} />
+        {fm.title && <title>{fm.title}</title>}
+        {fm.title && <meta property="og:title" content={fm.title} />}
+        {fm.description && <meta name="description" content={fm.description} />}
+        {fm.description && (
+          <meta property="og:description" content={fm.description} />
+        )}
+        {fm.keywords && (
+          <meta name="keywords" content={fm.keywords.join(',')} />
+        )}
+        {fm.keywords &&
+          fm.keywords.map((keyword) => (
+            <meta key={keyword} property="article:tag" content={keyword}></meta>
+          ))}
+        {hostname && <link rel="canonical" href={hostname + pathname} />}
+      </Helmet>
+      {siderbar ? <MainLayout /> : <Home />}
+    </>
   );
 };
 export default Main;

@@ -10,7 +10,7 @@ export default defineConfig({
       {
         link: '/webgl',
         title: '原生',
-        icon: '//www.junfengshow.com/static/favicon.png',
+        icon: '/image-stack.png',
       },
       {
         link: '/three',
@@ -66,4 +66,5 @@ export default defineConfig({
   outputPath: 'docs-3d',
   base: '/',
   publicPath: '/',
+  copy: ['public'],
 });
