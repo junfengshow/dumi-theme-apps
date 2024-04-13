@@ -3,6 +3,7 @@ import { defineConfig } from 'dumi';
 export default defineConfig({
   themeConfig: {
     name: 'WebGL',
+    // subName: '学习笔记',
     title: '算法与数据结构',
     logo: '//www.junfengshow.com/static/assets/logo.png',
 
@@ -57,6 +58,7 @@ export default defineConfig({
     //     },
     //   ],
     // },
+    footer: `xxx<a href='www.baidu.com'>ddss</a>`,
   },
   favicons: ['//www.junfengshow.com/static/favicon.png'],
 

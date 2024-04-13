@@ -12,10 +12,27 @@ import {
 } from 'dumi';
 import DumiContent from 'dumi/theme-default/slots/Content';
 import React, { useMemo } from 'react';
+import Icon3d from '../../icons/Icon3d';
 import styles from './MainLayout.module.less';
 import SubMenu from './SubMenu';
 
 const { Header, Content, Footer, Sider } = Layout;
+
+const IconDot = () => (
+  <svg
+    viewBox="0 0 1024 1024"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    fill="currentColor"
+  >
+    <path
+      d="M658.285714 512c0 80.566857-65.718857 146.285714-146.285714 146.285714s-146.285714-65.718857-146.285714-146.285714 65.718857-146.285714 146.285714-146.285714 146.285714 65.718857 146.285714 146.285714z m-146.285714-310.857143c-171.446857 0-310.857143 139.446857-310.857143 310.857143s139.446857 310.857143 310.857143 310.857143 310.857143-139.446857 310.857143-310.857143-139.446857-310.857143-310.857143-310.857143zM950.857143 512c0 242.285714-196.571429 438.857143-438.857143 438.857143S73.142857 754.285714 73.142857 512 269.714286 73.142857 512 73.142857s438.857143 196.571429 438.857143 438.857143z"
+      fill=""
+    ></path>
+  </svg>
+);
 
 const Main: React.FC = () => {
   const { pathname } = useLocation();
@@ -25,24 +42,35 @@ const Main: React.FC = () => {
   const { themeConfig } = useSiteData();
 
   const menu = useMemo(() => {
+    // console.log(siderbar);
     return nav.map((item) => {
-      const submenus = [];
+      const submenus: any[] = [];
       for (const key in siderbar) {
-        if (
-          !key.includes(item.link!) ||
-          key === '/index' ||
-          nav.some((it) => it.link === key)
-        ) {
+        if (!key.includes(item.link!) || key === '/index') {
           continue;
         }
-        const subItem = siderbar[key][0];
-        submenus.push({
-          label: subItem.title,
-          key: key.substring(0, key.length - 2),
-          children: subItem?.children.map((subItem) => ({
+        const subItems = siderbar[key]; // title 为undefined 的是未分组的页面
+
+        subItems.sort((a, b) => b.order - a.order);
+        subItems.forEach((subItem) => {
+          if (!subItem.title) {
+            submenus.push(
+              ...(subItem?.children.map((subItem) => ({
+                label: subItem.title,
+                key: subItem.link,
+              })) || []),
+            );
+            return;
+          }
+          submenus.push({
             label: subItem.title,
-            key: subItem.link,
-          })),
+            order: subItem.order,
+            key: key.substring(0, key.length - 2),
+            children: subItem?.children.map((subItem) => ({
+              label: subItem.title,
+              key: subItem.link,
+            })),
+          });
         });
       }
       return {
@@ -50,11 +78,13 @@ const Main: React.FC = () => {
         key: item.link,
         icon: item.icon ? (
           <img src={item.icon} className={styles.navIcon} />
-        ) : undefined,
+        ) : (
+          <IconDot />
+        ),
         submenus,
       };
     }) as any[];
-  }, [siderbar, nav, pathname]);
+  }, [siderbar, nav]);
 
   const currentItem =
     pathname === '/'
@@ -73,7 +103,12 @@ const Main: React.FC = () => {
       >
         <div className={styles.logo}>
           {!!themeConfig.logo && <img src={themeConfig.logo} alt="" />}
-          <strong>{themeConfig.name}</strong>
+          <div className={styles.logoRight}>
+            <div>{themeConfig.name}</div>
+            {!!themeConfig.subName && (
+              <div className={styles.logoSubName}>{themeConfig.subName}</div>
+            )}
+          </div>
         </div>
         <Menu
           theme="dark"
@@ -96,10 +131,10 @@ const Main: React.FC = () => {
       <Layout className={styles.mainContent}>
         <Header className={styles.mainHeader}>
           <div className={styles.headerLeft}>
-            {!!currentItem?.icon && (
-              <div className={styles.headerIcon}>{currentItem?.icon}</div>
-            )}
-            {currentItem?.label}
+            <div className={styles.headerIcon}>
+              <Icon3d />
+              <strong>{currentItem.label}</strong>
+            </div>
           </div>
         </Header>
         <Content className={styles.pageContentWrap}>

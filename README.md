@@ -20,7 +20,19 @@ import { defineConfig } from 'dumi';
 
 export defineConfig({
   themeConfig: {
-    ...
+    // docs 下的第一层 相当于一个应用
+    nav: [
+      {
+        link: '/webgl',
+        title: 'webgl',
+      },
+      {
+        link: '/three',
+        title: 'three',
+      },
+    ],
+    // 左上角副标题
+    subName: 'xxx',
   },
 });
 ```
@@ -29,7 +41,10 @@ That's all, now you can execute `dumi dev` and enjoy this theme.
 
 ## Options
 
-TODO
+### themeConfig
+
+1.nav
+2.subName
 
 ## Development
 
@@ -50,7 +65,3 @@ npm run dev
 > Note: all Node.js-runtime files should be put into `src/plugin` directory, `father-plugin-dumi-theme` will transform them to CommonJS dist automatically.
 
 dumi theme development documentation: https://d.umijs.org/theme
-
-## LICENSE
-
-MIT

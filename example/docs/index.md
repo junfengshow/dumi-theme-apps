@@ -1,7 +1,7 @@
 ---
 title: WebGL学习笔记
 hero:
-  title: 学而思
+  title: 敏而好学
   desc: 不积跬步，无以至千里，不积小流，无以成江海。
   actions:
     - text: 进入笔记

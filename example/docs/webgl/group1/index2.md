@@ -1,7 +1,7 @@
 ---
 title: 原生2
 group:
-  title: aaa
+  title: group1
   order: 3
 order: 0
 footer: false
