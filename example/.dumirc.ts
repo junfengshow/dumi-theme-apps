@@ -6,7 +6,6 @@ export default defineConfig({
     // subName: '学习笔记',
     title: '算法与数据结构',
     logo: '//www.junfengshow.com/static/assets/logo.png',
-
     nav: [
       {
         link: '/webgl',

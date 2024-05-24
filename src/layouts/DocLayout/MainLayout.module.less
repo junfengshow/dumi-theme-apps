@@ -130,7 +130,7 @@ body {
   :global(.dumi-default-content) {
     border-radius: 8px;
     margin: 10px;
-    padding: 10px 20px;
+    padding: 10px 160px 10px 20px;
     min-height: calc(100vh - 48px);
     background: #fff;
   }
@@ -149,4 +149,37 @@ body {
   object-fit: cover;
   display: block;
   border-radius: 2px;
+}
+
+.anchorWrap {
+  position: fixed;
+  top: 62px;
+  right: 10px;
+  background: #fff;
+  padding-right: 10px;
+
+  :global {
+    .ant-anchor.ant-anchor::before {
+      border-inline-start: 1px solid rgba(0, 0, 0, 6%);
+    }
+
+    .ant-anchor-link-title {
+      width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ant-anchor-link.anchor-item-3 .ant-anchor-link-title {
+      padding-left: 14px;
+    }
+
+    .ant-anchor-link.anchor-item-4 .ant-anchor-link-title {
+      padding-left: 28px;
+    }
+
+    .ant-anchor-link.anchor-item-5 .ant-anchor-link-title {
+      padding-left: 42px;
+    }
+  }
 }

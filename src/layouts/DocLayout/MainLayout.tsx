@@ -1,17 +1,18 @@
 /**
  * main layout
  */
-import { Layout, Menu } from 'antd';
+import { Anchor, Layout, Menu } from 'antd';
 import {
   history,
   useFullSidebarData,
   useLocation,
   useNavData,
   useOutlet,
+  useRouteMeta,
   useSiteData,
 } from 'dumi';
 import DumiContent from 'dumi/theme-default/slots/Content';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Icon3d from '../../icons/Icon3d';
 import styles from './MainLayout.module.less';
 import SubMenu from './SubMenu';
@@ -40,18 +41,36 @@ const Main: React.FC = () => {
   const nav = useNavData();
   const outlet = useOutlet();
   const { themeConfig } = useSiteData();
+  const meta = useRouteMeta();
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [targetOffset, setTargetOffset] = useState(10);
+  const anchorList = useMemo(
+    () => meta.toc.filter((item) => item.depth > 1 && item.depth <= 5),
+    [meta],
+  );
 
   const menu = useMemo(() => {
-    // console.log(siderbar);
     return nav.map((item) => {
       const submenus: any[] = [];
+      const parts = [];
       for (const key in siderbar) {
         if (!key.includes(item.link!) || key === '/index') {
           continue;
         }
-        const subItems = siderbar[key]; // title 为undefined 的是未分组的页面
+        const subItems = siderbar[key];
+        const partItem = subItems.find((it) => !!it.title);
+        parts.push({
+          key,
+          subItems,
+          order: partItem ? partItem.order : 0,
+        });
+      }
 
-        subItems.sort((a, b) => b.order - a.order);
+      // 先排序
+      parts.sort((a, b) => a.order - b.order);
+      // console.log(parts);
+      parts.forEach(({ subItems, key }) => {
         subItems.forEach((subItem) => {
           if (!subItem.title) {
             submenus.push(
@@ -72,7 +91,7 @@ const Main: React.FC = () => {
             })),
           });
         });
-      }
+      });
       return {
         label: item.title,
         key: item.link,
@@ -92,6 +111,9 @@ const Main: React.FC = () => {
       : menu.find(
           (item) => item.key !== '/' && pathname.indexOf(item.key) !== -1,
         );
+  useEffect(() => {
+    setTargetOffset(window.innerHeight / 2);
+  }, []);
 
   return (
     <Layout className={styles.pageWrap}>
@@ -102,7 +124,11 @@ const Main: React.FC = () => {
         collapsed={false}
       >
         <div className={styles.logo}>
-          {!!themeConfig.logo && <img src={themeConfig.logo} alt="" />}
+          {!!themeConfig.logo && (
+            <a href="/">
+              <img src={themeConfig.logo} alt="" />
+            </a>
+          )}
           <div className={styles.logoRight}>
             <div>{themeConfig.name}</div>
             {!!themeConfig.subName && (
@@ -141,7 +167,19 @@ const Main: React.FC = () => {
           {!!currentItem?.submenus && (
             <SubMenu menu={currentItem?.submenus} currentItem={currentItem} />
           )}
-          <div className={styles.contentWrap}>
+          <div className={styles.contentWrap} ref={contentRef}>
+            <Anchor
+              className={styles.anchorWrap}
+              showInkInFixed
+              items={anchorList.map((item) => ({
+                key: item.id,
+                href: `#${item.id}`,
+                title: item.title,
+                className: `anchor-item-${item.depth}`,
+              }))}
+              targetOffset={targetOffset}
+              getContainer={() => contentRef.current || window}
+            ></Anchor>
             <DumiContent>{outlet}</DumiContent>
             <Footer className={styles.footer}>恭喜发财</Footer>
           </div>

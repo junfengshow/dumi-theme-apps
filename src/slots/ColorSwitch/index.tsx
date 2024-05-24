@@ -4,7 +4,6 @@ import React from 'react';
 
 const MyColorSwitch: typeof ColorSwitch = (props) => {
   const { themeConfig } = useSiteData();
-  console.log('themeConfig', themeConfig);
   return (
     <>
       <ColorSwitch {...props} />

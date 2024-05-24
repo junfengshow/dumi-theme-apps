@@ -2,8 +2,8 @@
 title: user3
 group:
   title: users
-  order: 4
-order: 0
+  order: 1
+order: 3
 footer: false
 ---
 

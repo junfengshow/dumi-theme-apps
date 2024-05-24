@@ -1,6 +1,6 @@
 ---
 title: index4
-order: 0
+order: 4
 footer: false
 ---
 

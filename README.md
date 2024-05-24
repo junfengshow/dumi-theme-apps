@@ -33,6 +33,10 @@ export defineConfig({
     ],
     // 左上角副标题
     subName: 'xxx',
+    // 首页背景图
+    bgImageUrl: '',
+    // 首页背景图模糊图
+    bgImageUrlSmall: ''
   },
 });
 ```

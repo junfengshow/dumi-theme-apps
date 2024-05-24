@@ -2,8 +2,7 @@
 title: index3
 group:
   title: aaa
-  order: 4
-order: 0
+order: 3
 footer: false
 ---
 
