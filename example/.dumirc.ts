@@ -12,11 +12,13 @@ export default defineConfig({
         title: '原生',
         icon: '/image-stack.png',
       },
+
       {
         link: '/three',
-        title: 'three',
+        title: 'threethreethreethreethreethreethreethree',
       },
     ] as any[],
+    navType: 'card',
     // sidebar: {
     //   '/three': [
     //     {

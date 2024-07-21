@@ -124,6 +124,18 @@ body {
   height: calc(100vh - 48px) !important;
   flex: auto;
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
 }
 
 .contentWrap {

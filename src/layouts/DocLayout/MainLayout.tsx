@@ -15,6 +15,7 @@ import DumiContent from 'dumi/theme-default/slots/Content';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Icon3d from '../../icons/Icon3d';
 import styles from './MainLayout.module.less';
+import MenuCard from './MenuCard';
 import SubMenu from './SubMenu';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -95,11 +96,14 @@ const Main: React.FC = () => {
       return {
         label: item.title,
         key: item.link,
-        icon: item.icon ? (
-          <img src={item.icon} className={styles.navIcon} />
-        ) : (
-          <IconDot />
-        ),
+        icon:
+          themeConfig.navType === 'card' ? (
+            item.icon
+          ) : item.icon ? (
+            <img src={item.icon} className={styles.navIcon} />
+          ) : (
+            <IconDot />
+          ),
         submenus,
       };
     }) as any[];
@@ -114,6 +118,17 @@ const Main: React.FC = () => {
   useEffect(() => {
     setTargetOffset(window.innerHeight / 2);
   }, []);
+
+  const onMenuSelect = ({ key }: any) => {
+    const item = menu.find((it) => it.key === key);
+    const first = item.submenus[0];
+    let _key = first?.key || key;
+    if (first?.children?.length) {
+      _key = first.children[0].key;
+    }
+
+    history.push(_key);
+  };
 
   return (
     <Layout className={styles.pageWrap}>
@@ -136,23 +151,22 @@ const Main: React.FC = () => {
             )}
           </div>
         </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[currentItem?.key || '/']}
-          items={menu}
-          onSelect={({ key }) => {
-            const item = menu.find((it) => it.key === key);
-            const first = item.submenus[0];
-            let _key = first.key || key;
-            if (first.children?.length) {
-              _key = first.children[0].key;
-            }
-
-            history.push(_key);
-          }}
-          className={styles.pageMenu}
-        />
+        {themeConfig.navType === 'card' ? (
+          <MenuCard
+            menu={menu}
+            selectedKey={currentItem?.key || '/'}
+            onSelect={onMenuSelect}
+          />
+        ) : (
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[currentItem?.key || '/']}
+            items={menu}
+            onSelect={onMenuSelect}
+            className={styles.pageMenu}
+          />
+        )}
       </Sider>
       <Layout className={styles.mainContent}>
         <Header className={styles.mainHeader}>
