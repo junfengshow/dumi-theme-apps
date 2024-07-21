@@ -55,6 +55,7 @@ const Main: React.FC = () => {
     return nav.map((item) => {
       const submenus: any[] = [];
       const parts = [];
+      console.log(siderbar);
       for (const key in siderbar) {
         if (!key.includes(item.link!) || key === '/index') {
           continue;
@@ -69,7 +70,7 @@ const Main: React.FC = () => {
       }
 
       // 先排序
-      parts.sort((a, b) => a.order - b.order);
+      // parts.sort((a, b) => a.order - b.order);
       // console.log(parts);
       parts.forEach(({ subItems, key }) => {
         subItems.forEach((subItem) => {
@@ -78,6 +79,7 @@ const Main: React.FC = () => {
               ...(subItem?.children.map((subItem) => ({
                 label: subItem.title,
                 key: subItem.link,
+                order: subItem.order,
               })) || []),
             );
             return;
@@ -93,6 +95,7 @@ const Main: React.FC = () => {
           });
         });
       });
+      submenus.sort((a, b) => a.order - b.order);
       return {
         label: item.title,
         key: item.link,
