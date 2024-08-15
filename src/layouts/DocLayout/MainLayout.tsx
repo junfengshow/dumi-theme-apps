@@ -55,7 +55,6 @@ const Main: React.FC = () => {
     return nav.map((item) => {
       const submenus: any[] = [];
       const parts = [];
-      console.log(siderbar);
       for (const key in siderbar) {
         if (!key.includes(item.link!) || key === '/index') {
           continue;

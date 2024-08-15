@@ -15,13 +15,12 @@ const MenuCard = ({
   return (
     <div className={styles.cardWrap}>
       {menu.map((item, idx) => (
-        <>
+        <div key={item.key}>
           {idx !== 0 && <div className={styles.divide} />}
           <div
             className={classNames(styles.cardItem, {
               [styles.cardItemActive]: selectedKey === item.key,
             })}
-            key={item.key}
             onClick={() => {
               onSelect(item);
             }}
@@ -31,7 +30,7 @@ const MenuCard = ({
             </div>
             <div className={styles.label}>{item.label}</div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
