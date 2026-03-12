@@ -1,6 +1,6 @@
 {
   "name": "dumi-theme-apps",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A theme package for dumi",
   "keywords": [
     "dumi",
@@ -49,6 +49,8 @@
   "dependencies": {
     "animated-scroll-to": "^2.3.0",
     "antd": "^5.15.4",
+    "classnames": "^2.5.1",
+    "ogl": "1.0.11",
     "user": "^0.0.0"
   },
   "devDependencies": {

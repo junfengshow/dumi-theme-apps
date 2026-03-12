@@ -1,7 +1,7 @@
 import { Menu } from 'antd';
 import classNames from 'classnames';
+import { history, useLocation } from 'dumi';
 import React, { useEffect, useState } from 'react';
-import { history, useLocation } from 'umi';
 import styles from './SubMenu.module.less';
 
 const PageSubMenu: React.FC<any> = ({ menu, currentItem }) => {

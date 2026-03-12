@@ -18,7 +18,7 @@ export default defineConfig({
         title: 'threethreethreethreethreethreethreethree',
       },
     ] as any[],
-    navType: 'card',
+    // navType: 'card',
     // sidebar: {
     //   '/three': [
     //     {

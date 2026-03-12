@@ -137,7 +137,7 @@ const Main: React.FC = () => {
       <Sider
         collapsedWidth="50"
         className={styles.sider}
-        width={132}
+        width={122}
         collapsed={false}
       >
         <div className={styles.logo}>
